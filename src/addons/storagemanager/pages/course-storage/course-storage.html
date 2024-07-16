@@ -48,7 +48,7 @@
         <ng-container *ngFor="let section of sections">
             <ion-card class="section" *ngIf="section.modules.length > 0">
                 <ion-card-header>
-                    <ion-item [lines]="section.expanded ? 'full' : 'none'" button [detail]="false" (click)="toggleExpand($event, section)"
+                    <ion-item [lines]="section.expanded ? 'full' : 'none'" [detail]="false" (click)="toggleExpand($event, section)"
                         [class.core-course-storage-section-expanded]="section.expanded"
                         [attr.aria-label]="(section.expanded ? 'core.collapse' : 'core.expand') | translate"
                         [attr.aria-expanded]="section.expanded" [attr.aria-controls]="'core-course-storage-section-' + section.id">
@@ -77,7 +77,8 @@
                             <div *ngIf="downloadEnabled" slot="end" class="core-button-spinner">
                                 <core-download-refresh *ngIf="!section.isDownloading && section.downloadStatus !== statusDownloaded"
                                     [status]="section.downloadStatus" [enabled]="true" (action)="prefecthSection(section)"
-                                    [loading]="section.isDownloading || section.isCalculating" [canTrustDownload]="true" />
+                                    [loading]="section.isDownloading || section.isCalculating" [canTrustDownload]="true"
+                                    [statusTranslatable]="'addon.storagemanager.downloaddatafrom' | translate: { name: section.name }" />
 
                                 <ion-badge class="core-course-download-section-progress"
                                     *ngIf="section.isDownloading && section.count < section.total" role="progressbar"
@@ -122,7 +123,8 @@
                                     <core-download-refresh *ngIf="downloadEnabled && module.handlerData?.showDownloadButton &&
                                         module.downloadStatus !== statusDownloaded" [status]="module.downloadStatus" [enabled]="true"
                                         [canTrustDownload]="true" [loading]="module.spinner || module.handlerData.spinner"
-                                        (action)="prefetchModule(module)" />
+                                        (action)="prefetchModule(module)"
+                                        [statusTranslatable]="'addon.storagemanager.downloaddatafrom' | translate: { name: module.name }" />
                                     <ion-button fill="clear" (click)="deleteForModule($event, module, section)"
                                         *ngIf="!module.calculatingSize && module.totalSize > 0" color="danger">
                                         <ion-icon name="fas-trash" slot="icon-only"
